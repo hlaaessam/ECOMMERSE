@@ -1,27 +1,77 @@
-# Ecommerce
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
+# FreshCart E-Commerce Application
 
-## Development server
+A full-featured E-commerce platform built with **Angular 17** using **Server-Side Rendering (SSR)**. The application handles user authentication, product catalog manipulation, dynamic filtering, real-time cart handling, and order placements. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+🌐 **Live Demo:** [https://e-commerse-app-mu.vercel.app](https://e-commerse-app-mu.vercel.app)
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Features
 
-## Build
+* **User Authentication:** Includes Register, Login, and Forgot Password features backed by route guards, interceptors, and `jwt-decode` token validation.
+* **Product Discovery:** View individual brand pages, product listings, item-specific details, and categories.
+* **Shopping Cart & Checkout:** Add items to cart dynamically, modify quantities, view order summaries, and process checkout.
+* **UI Enhancements:** Uses `ngx-owl-carousel-o` for slider interfaces, `ngx-spinner` for loading transitions, and `ngx-toastr` for alert notifications.
+* **Internationalization (i18n):** Multi-language translation support implemented with `@ngx-translate`.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
+## Built With
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+* **Core Framework:** Angular v17 (with SSR and SCSS support)
+* **UI Layout & Styling:** Bootstrap v5.3 + FontAwesome Free Icons v7.2
+* **Form Validation:** Angular Reactive Forms with `@rxweb/reactive-form-validators`
+* **State & Global UI Management:** RxJS state observables, Angular Custom Services, and Route Guards
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Project Architecture
 
-## Further help
+```text
+ECOMMERSE_ANGULAR/
+│
+├── src/
+│   ├── app/
+│   │   ├── components/        # UI Standalone views 
+│   │   │   ├── allorders/     # Past order records
+│   │   │   ├── brands/        # Item collections grouped by manufacturer
+│   │   │   ├── cart/          # Active cart summary & quantity modifier
+│   │   │   ├── categories/    # Product categories grid view
+│   │   │   ├── forgotpassword/# Password recovery interface
+│   │   │   ├── home/          # Landing platform & promotional banners
+│   │   │   ├── login/         # Secure user authentication interface
+│   │   │   ├── nav-auth/      # Navigation bar for visitors
+│   │   │   ├── nav-blank/     # Dynamic navigation bar for active users
+│   │   │   ├── productdetails/# Deeper specification details breakdown
+│   │   │   └── register/      # New account configuration portal
+│   │   │
+│   │   ├── core/              # Underlying Application Infrastructure
+│   │   │   ├── environments/  # Production and staging base API URLs
+│   │   │   ├── guards/        # Route protection mechanisms
+│   │   │   ├── interceptors/  # HTTP request/response interceptors
+│   │   │   ├── interfaces/    # TypeScript structural type models
+│   │   │   ├── pipes/         # Text formatters and search queries 
+│   │   │   └── services/      # Network API calls and business data utilities
+│   │   │
+│   │   └── layouts/           # Structural layout templates
+│   │
+│   ├── assets/                # Static asset storage (Images, local i18n JSONs)
+│   ├── main.ts                # Application bootstrapper
+│   └── styles.scss            # Global stylesheets
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## ⚙️ Development Execution
+
+> ** Local Environment Setup**
+> To download all required node modules and start your local development server:
+> ```bash
+> npm install
+> npm start
+> ```
+
+> ** Production Deployment**
+> To compile and bundle the application with Server-Side Rendering (SSR) configs for production:
+> ```bash
+> npm run build
+> ```
