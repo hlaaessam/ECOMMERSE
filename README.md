@@ -59,8 +59,7 @@ ECOMMERSE_ANGULAR/
 │   ├── assets/                # Static asset storage (Images, local i18n JSONs)
 │   ├── main.ts                # Application bootstrapper
 │   └── styles.scss            # Global stylesheets
-
-
+```
 ## ⚙️ Development Execution
 
 > ** Local Environment Setup**
