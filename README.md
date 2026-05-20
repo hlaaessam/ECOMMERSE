@@ -1,7 +1,7 @@
 
 # FreshCart E-Commerce Application
 
-A full-featured E-commerce platform built with **Angular 17** using **Server-Side Rendering (SSR)**. The application handles user authentication, product catalog manipulation, dynamic filtering, real-time cart handling, and order placements. 
+A full-featured E-commerce platform built with **Angular** using **Server-Side Rendering (SSR)**. The application handles user authentication, product catalog manipulation, dynamic filtering, real-time cart handling, and order placements. 
 
 🌐 **Live Demo:** [https://e-commerse-app-mu.vercel.app](https://e-commerse-app-mu.vercel.app)
 
@@ -62,14 +62,14 @@ ECOMMERSE_ANGULAR/
 ```
 ## ⚙️ Development Execution
 
-> ** Local Environment Setup**
+> ## Local Environment Setup
 > To download all required node modules and start your local development server:
 > ```bash
 > npm install
 > npm start
 > ```
 
-> ** Production Deployment**
+> ## Production Deployment
 > To compile and bundle the application with Server-Side Rendering (SSR) configs for production:
 > ```bash
 > npm run build
