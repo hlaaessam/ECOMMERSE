@@ -1,0 +1,10 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "Proudcts",
+    "categories": "Categories",
+    "brands": "Brands",
+    "signout": "Signout",
+    "lang": "Lang"
+  }
+}

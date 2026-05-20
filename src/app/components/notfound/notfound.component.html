@@ -1,0 +1,64 @@
+<div class="notfound-page">
+  <!-- Animated background blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <!-- Floating particles -->
+  <div class="particles">
+    @for (p of particles; track $index) {
+      <div
+        class="particle"
+        [style.--delay]="p.delay"
+        [style.--x]="p.x"
+        [style.--size]="p.size"
+      ></div>
+    }
+  </div>
+
+  <div class="notfound-content">
+    <!-- Giant 404 -->
+    <div class="nf-code-wrap">
+      <span class="nf-four nf-four--left">4</span>
+      <div class="nf-zero-wrap">
+        <div class="nf-zero">
+          <div class="nf-zero-inner">
+            <i class="fas fa-leaf nf-leaf"></i>
+          </div>
+        </div>
+      </div>
+      <span class="nf-four nf-four--right">4</span>
+    </div>
+
+    <!-- Message -->
+    <div class="nf-message">
+      <h1 class="nf-title">Page Not Found</h1>
+      <p class="nf-subtitle">
+        Looks like this page wandered off the garden path.<br />
+        Let's get you back to somewhere green.
+      </p>
+    </div>
+
+    <!-- Actions -->
+    <div class="nf-actions">
+      <a routerLink="/" class="btn-main nf-btn-home">
+        <i class="fas fa-home me-2"></i> Go Home
+      </a>
+      <button class="nf-btn-back" onclick="history.back()">
+        <i class="fas fa-arrow-left me-2"></i> Go Back
+      </button>
+    </div>
+
+    <!-- Quick links -->
+    <div class="nf-links">
+      <span class="nf-links-label">Or explore:</span>
+      <a routerLink="/products" class="nf-link">Products</a>
+      <span class="nf-dot">·</span>
+      <a routerLink="/categories" class="nf-link">Categories</a>
+      <span class="nf-dot">·</span>
+      <a routerLink="/brands" class="nf-link">Brands</a>
+      <span class="nf-dot">·</span>
+      <a routerLink="/cart" class="nf-link">Cart</a>
+    </div>
+  </div>
+</div>

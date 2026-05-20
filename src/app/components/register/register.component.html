@@ -1,0 +1,271 @@
+<div
+  class="d-flex align-items-center justify-content-center"
+  style="background: var(--bg); height: calc(100vh - 58.54px)"
+>
+  <div class="card border-0 shadow-lg rounded-4 w-100" style="max-width: 480px">
+    <!-- Card Header -->
+    <div
+      class="card-header border-0 rounded-top-4 text-white text-center py-4"
+      style="
+        background: linear-gradient(
+          135deg,
+          var(--main-color),
+          var(--main-dark)
+        );
+      "
+    >
+      <div class="mb-2">
+        <i class="fas fa-user-plus fa-2x opacity-75"></i>
+      </div>
+      <h2 class="h4 fw-bold mb-1">Create Account</h2>
+      <p class="small opacity-75 mb-0">Join us today, it's free!</p>
+    </div>
+
+    <!-- Card Body -->
+    <div class="px-4 py-4">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="row">
+        <!-- Name -->
+        <div class="mb-3 col-12 col-md-6">
+          <label for="name" class="form-label fw-semibold small text-secondary">
+            <i class="fas fa-user me-1"></i> Full Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control rounded-3"
+            placeholder="Enter your full name"
+            [ngClass]="{
+              'is-valid':
+                !registerForm.get('name')?.errors &&
+                (registerForm.get('name')?.touched ||
+                  registerForm.get('name')?.dirty),
+              'is-invalid':
+                registerForm.get('name')?.errors &&
+                (registerForm.get('name')?.touched ||
+                  registerForm.get('name')?.dirty),
+            }"
+          />
+          @if (
+            registerForm.get("name")?.errors &&
+            (registerForm.get("name")?.touched ||
+              registerForm.get("name")?.dirty)
+          ) {
+            <div class="invalid-feedback">
+              @if (registerForm.get("name")?.getError("required")) {
+                Name is required
+              } @else if (registerForm.get("name")?.getError("minlength")) {
+                At least 3 characters
+              } @else if (registerForm.get("name")?.getError("maxlength")) {
+                At most 20 characters
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3 col-12 col-md-6">
+          <label
+            for="email"
+            class="form-label fw-semibold small text-secondary"
+          >
+            <i class="fas fa-envelope me-1"></i> Email Address
+          </label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control rounded-3"
+            placeholder="you@example.com"
+            [ngClass]="{
+              'is-valid':
+                !registerForm.get('email')?.errors &&
+                (registerForm.get('email')?.touched ||
+                  registerForm.get('email')?.dirty),
+              'is-invalid':
+                registerForm.get('email')?.errors &&
+                (registerForm.get('email')?.touched ||
+                  registerForm.get('email')?.dirty),
+            }"
+          />
+          @if (
+            registerForm.get("email")?.errors &&
+            (registerForm.get("email")?.touched ||
+              registerForm.get("email")?.dirty)
+          ) {
+            <div class="invalid-feedback">
+              @if (registerForm.get("email")?.getError("required")) {
+                Email is required
+              } @else if (registerForm.get("email")?.getError("email")) {
+                Enter a valid email
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Phone -->
+        <div class="mb-3 col-12 col-md-6">
+          <label
+            for="phone"
+            class="form-label fw-semibold small text-secondary"
+          >
+            <i class="fas fa-phone me-1"></i> Phone Number
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            formControlName="phone"
+            class="form-control rounded-3"
+            placeholder="01XXXXXXXXX"
+            [ngClass]="{
+              'is-valid':
+                !registerForm.get('phone')?.errors &&
+                (registerForm.get('phone')?.touched ||
+                  registerForm.get('phone')?.dirty),
+              'is-invalid':
+                registerForm.get('phone')?.errors &&
+                (registerForm.get('phone')?.touched ||
+                  registerForm.get('phone')?.dirty),
+            }"
+          />
+          @if (
+            registerForm.get("phone")?.errors &&
+            (registerForm.get("phone")?.touched ||
+              registerForm.get("phone")?.dirty)
+          ) {
+            <div class="invalid-feedback">
+              @if (registerForm.get("phone")?.getError("required")) {
+                Phone is required
+              } @else if (registerForm.get("phone")?.getError("pattern")) {
+                Enter a valid Egyptian phone number
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3 col-12 col-md-6">
+          <label
+            for="password"
+            class="form-label fw-semibold small text-secondary"
+          >
+            <i class="fas fa-lock me-1"></i> Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            class="form-control rounded-3"
+            placeholder="Min. 6 characters"
+            [ngClass]="{
+              'is-valid':
+                !registerForm.get('password')?.errors &&
+                (registerForm.get('password')?.touched ||
+                  registerForm.get('password')?.dirty),
+              'is-invalid':
+                registerForm.get('password')?.errors &&
+                (registerForm.get('password')?.touched ||
+                  registerForm.get('password')?.dirty),
+            }"
+          />
+          @if (
+            registerForm.get("password")?.errors &&
+            (registerForm.get("password")?.touched ||
+              registerForm.get("password")?.dirty)
+          ) {
+            <div class="invalid-feedback">
+              @if (registerForm.get("password")?.getError("required")) {
+                Password is required
+              } @else if (registerForm.get("password")?.getError("pattern")) {
+                At least 6 characters
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Re-enter Password -->
+        <div class="mb-4 col-12 col-md-6">
+          <label
+            for="rePassword"
+            class="form-label fw-semibold small text-secondary"
+          >
+            <i class="fas fa-lock me-1"></i> Confirm Password
+          </label>
+          <input
+            type="password"
+            id="rePassword"
+            formControlName="rePassword"
+            class="form-control rounded-3"
+            placeholder="Re-enter your password"
+            [ngClass]="{
+              'is-valid':
+                !registerForm.get('rePassword')?.errors &&
+                !registerForm.getError('mismatch') &&
+                (registerForm.get('rePassword')?.touched ||
+                  registerForm.get('rePassword')?.dirty),
+              'is-invalid':
+                (registerForm.get('rePassword')?.errors ||
+                  registerForm.getError('mismatch')) &&
+                (registerForm.get('rePassword')?.touched ||
+                  registerForm.get('rePassword')?.dirty),
+            }"
+          />
+          @if (
+            registerForm.getError("mismatch") &&
+            (registerForm.get("rePassword")?.touched ||
+              registerForm.get("rePassword")?.dirty)
+          ) {
+            <div class="invalid-feedback">Passwords do not match</div>
+          }
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="btn w-100 rounded-3 py-2 fw-bold text-white border-0"
+          style="
+            background: linear-gradient(
+              135deg,
+              var(--main-color),
+              var(--main-dark)
+            );
+            letter-spacing: 0.3px;
+          "
+          [disabled]="isLoading"
+        >
+          @if (isLoading) {
+            <span
+              class="spinner-border spinner-border-sm me-2"
+              role="status"
+            ></span>
+            Creating account…
+          } @else {
+            <i class="fas fa-user-plus me-2"></i> Create Account
+          }
+        </button>
+
+        <!-- Success -->
+        @if (isSuccess) {
+          <div
+            class="alert alert-success d-flex align-items-center gap-2 mt-3 rounded-3 py-2"
+            role="alert"
+          >
+            <i class="fas fa-circle-check"></i>
+            <span>Account created! Redirecting to login…</span>
+          </div>
+        }
+      </form>
+    </div>
+
+    <!-- Card Footer -->
+    <div class="card-footer bg-transparent border-0 text-center pb-4">
+      <span class="small text-secondary">Already have an account?</span>
+      <a
+        routerLink="/login"
+        class="small fw-bold ms-1 cr"
+        style="color: var(--main-color)"
+        >Sign in</a
+      >
+    </div>
+  </div>
+</div>

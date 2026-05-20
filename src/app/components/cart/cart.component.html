@@ -1,0 +1,118 @@
+<section class="cart-page">
+  <!-- Header -->
+  <div class="cart-header">
+    <div class="header-line"></div>
+    <div class="header-content">
+      <span class="header-eyebrow">Your Selection</span>
+      <h2 class="header-title">Shop Cart</h2>
+      <p class="header-sub">
+        {{ cartDetails?.products?.length || 0 }} item{{
+          cartDetails?.products?.length !== 1 ? "s" : ""
+        }}
+        in your bag
+      </p>
+    </div>
+    <div class="header-line"></div>
+  </div>
+
+  <div class="cart-layout">
+    <!-- Items Column -->
+    <div class="cart-items">
+      @for (item of cartDetails.products; track item.product.id) {
+        <div class="cart-item">
+          <div class="item-img-wrap">
+            <img
+              [src]="item.product.imageCover"
+              [alt]="item.product.title"
+              class="item-img"
+            />
+          </div>
+
+          <div class="item-details">
+            <div class="item-top">
+              <div>
+                <span class="item-category">{{
+                  item.product.category?.name
+                }}</span>
+                <h3 class="item-title">{{ item.product.title }}</h3>
+              </div>
+              <span class="item-price">{{ item.price | currency: "GBP" }}</span>
+            </div>
+
+            <div class="item-bottom">
+              <div class="qty-control">
+                <span
+                  (click)="
+                    item.count > 1 &&
+                      updateCount(item.product.id, item.count - 1)
+                  "
+                  [class.disabled]="item.count === 1"
+                  class="qty-btn cr"
+                >
+                  <i class="fa-solid fa-minus"></i>
+                </span>
+                <span class="qty-value">{{ item.count }}</span>
+                <span
+                  (click)="updateCount(item.product.id, item.count + 1)"
+                  class="qty-btn cr"
+                >
+                  <i class="fa-solid fa-plus"></i>
+                </span>
+              </div>
+
+              <button
+                (click)="removeFromCart(item.product.id)"
+                class="remove-btn"
+              >
+                <i class="fa-solid fa-trash-can"></i> Remove
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Summary Aside -->
+    <aside class="cart-summary">
+      <span class="summary-heading">Order Summary</span>
+
+      <div class="summary-section">
+        @for (item of cartDetails.products; track item.product.id) {
+          <div class="summary-row">
+            <span class="s-label"
+              >{{ item.product.title | slice: 0 : 22 }}… ×{{ item.count }}</span
+            >
+            <span class="s-value">{{
+              item.price * item.count | currency: "GBP"
+            }}</span>
+          </div>
+        }
+      </div>
+
+      <div class="summary-divider"></div>
+
+      <div class="summary-row">
+        <span class="s-label">Shipping</span>
+        <span class="s-value free">Free</span>
+      </div>
+
+      <div class="summary-total">
+        <span class="total-label">Total</span>
+        <span class="total-value text-main">{{
+          cartDetails.totalCartPrice | currency: "GBP"
+        }}</span>
+      </div>
+
+      <button
+        class="btn-main w-100 mt-4"
+        routerLink="/orders/{{ cartDetails._id }}"
+      >
+        Proceed to Checkout <i class="fa-solid fa-arrow-right ms-1"></i>
+      </button>
+
+      <button (click)="clearItems()" class="clear-btn w-100 mt-2">
+        <i class="fa-solid fa-trash me-1"></i> Clear Cart
+      </button>
+    </aside>
+  </div>
+</section>

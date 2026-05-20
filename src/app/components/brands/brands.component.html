@@ -1,0 +1,214 @@
+<!-- ── All Brands View ───────────────────────────────────────────────────── -->
+@if (!selectedBrand()) {
+  <section class="brands-page">
+    <!-- Header -->
+    <div class="page-header">
+      <h1 class="page-title">Shop by <span>Brand</span></h1>
+      <p class="page-subtitle">Discover products from your favourite brands</p>
+    </div>
+
+    <!-- Search -->
+    <div class="search-wrapper">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search brands…"
+        [(ngModel)]="searchText"
+      />
+    </div>
+
+    <!-- Grid -->
+    @if (!isLoading()) {
+      <div class="brands-grid">
+        @for (
+          brand of brandsList() | search: searchText() : "name";
+          track brand._id
+        ) {
+          <div class="brand-card" (click)="openBrand(brand._id)">
+            <div class="brand-img-wrap">
+              <img [src]="brand.image" [alt]="brand.name" loading="lazy" />
+              <div class="img-overlay"></div>
+            </div>
+            <div class="card-body">
+              <h3 class="mx-1">{{ brand.name }}</h3>
+              <span class="view-link">
+                View all <i class="fa-solid fa-arrow-right ms-1"></i>
+              </span>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <!-- Skeleton loader -->
+      <div class="brands-grid">
+        @for (s of skeletons; track $index) {
+          <div class="brand-card skeleton-card">
+            <div class="skeleton-img"></div>
+            <div class="skeleton-body">
+              <div class="skeleton-line w60"></div>
+              <div class="skeleton-line w40"></div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Empty state -->
+    @if (
+      !isLoading() &&
+      (brandsList() | search: searchText() : "name").length === 0
+    ) {
+      <div class="empty-state">
+        <i class="fa-solid fa-tag"></i>
+        <p>
+          No brands found for "<strong>{{ searchText() }}</strong
+          >"
+        </p>
+      </div>
+    }
+  </section>
+}
+
+<!-- ── Single Brand View ─────────────────────────────────────────────────── -->
+@if (selectedBrand() || isLoadingDetail()) {
+  <section class="brand-detail">
+    @if (isLoadingDetail()) {
+      <div class="detail-loading">
+        <div class="spinner"></div>
+        <p>Loading brand…</p>
+      </div>
+    } @else {
+      <div class="detail-hero">
+        <!-- Back button -->
+        <button class="back-btn" (click)="closeBrand()">
+          <i class="fa-solid fa-arrow-left me-2"></i> Back
+        </button>
+
+        <!-- Hero banner -->
+        <div class="hero-img-wrap">
+          <img
+            [src]="selectedBrand()!.image"
+            [alt]="selectedBrand()!.name"
+            loading="lazy"
+          />
+          <div class="hero-gradient"></div>
+          <div class="hero-label">
+            <span class="badge-slug">{{ selectedBrand()!.slug }}</span>
+            <h2 class="hero-title">{{ selectedBrand()!.name }}</h2>
+            <p class="hero-meta">
+              <i class="fa-regular fa-calendar me-1"></i>
+              Added {{ selectedBrand()!.createdAt | date: "mediumDate" }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Info cards -->
+        <div class="detail-info mx-auto">
+          <div class="info-card">
+            <i class="fa-solid fa-tag info-icon"></i>
+            <div>
+              <span class="info-label">Brand Name</span>
+              <span class="info-value">{{ selectedBrand()!.name }}</span>
+            </div>
+          </div>
+          <div class="info-card">
+            <i class="fa-solid fa-link info-icon"></i>
+            <div>
+              <span class="info-label">Slug</span>
+              <span class="info-value">{{ selectedBrand()!.slug }}</span>
+            </div>
+          </div>
+          <div class="info-card">
+            <i class="fa-regular fa-clock info-icon"></i>
+            <div>
+              <span class="info-label">Last Updated</span>
+              <span class="info-value">{{
+                selectedBrand()!.updatedAt | date: "medium"
+              }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Products section -->
+        <div class="mt-5">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="section-title m-0 p-0">
+              Products in <span>{{ selectedBrand()!.name }}</span>
+              <span class="badge bg-main ms-2">{{
+                brandProducts().length
+              }}</span>
+            </h3>
+
+            <!-- Product search -->
+            <div class="search-wrapper m-0">
+              <i class="fa-solid fa-magnifying-glass search-icon"></i>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search products…"
+                [(ngModel)]="productSearch"
+              />
+            </div>
+          </div>
+
+          @if (brandProducts().length === 0) {
+            <div class="empty-state">
+              <i class="fa-solid fa-box-open"></i>
+              <p>No products available for this brand yet.</p>
+            </div>
+          }
+
+          <div class="row g-3">
+            @for (
+              product of brandProducts() | search: productSearch;
+              track product.id
+            ) {
+              <div class="col-6 col-md-4 col-lg-3 cr">
+                <div class="product">
+                  <img
+                    [src]="product.imageCover"
+                    class="w-100"
+                    [alt]="product.title"
+                    loading="lazy"
+                    [routerLink]="['/details', product.id]"
+                  />
+                  <div class="product-info p-2">
+                    <p class="brand-name text-muted small mb-1">
+                      {{ product.category.name }}
+                    </p>
+                    <h6 class="product-title">
+                      {{ product.title | slice: 0 : 40 }}...
+                    </h6>
+                    <div class="rating mb-1">
+                      <i class="fa-solid fa-star text-warning me-1"></i>
+                      <span class="small">{{ product.ratingsAverage }}</span>
+                      <span class="text-muted small ms-1"
+                        >({{ product.ratingsQuantity }})</span
+                      >
+                    </div>
+                    <div
+                      class="d-flex align-items-center justify-content-between mt-2"
+                    >
+                      <span class="price-current">
+                        {{
+                          product.price | currency: "EGP" : "symbol" : "1.0-0"
+                        }}
+                      </span>
+                      <button
+                        class="btn-main btn-sm"
+                        (click)="addCart(product.id)"
+                      >
+                        <i class="fa-solid fa-cart-plus me-1"></i> Add
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </section>
+}

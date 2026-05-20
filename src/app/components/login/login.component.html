@@ -1,0 +1,167 @@
+<div
+  class="d-flex align-items-center justify-content-center py-5"
+  style="background: var(--bg); height: calc(100vh - 58.54px)"
+>
+  <div class="card border-0 shadow-lg rounded-4 w-100" style="max-width: 440px">
+    <!-- Card Header -->
+    <div
+      class="card-header border-0 rounded-top-4 text-white text-center py-4"
+      style="
+        background: linear-gradient(
+          135deg,
+          var(--main-color),
+          var(--main-dark)
+        );
+      "
+    >
+      <div class="mb-2">
+        <i class="fas fa-right-to-bracket fa-2x opacity-75"></i>
+      </div>
+      <h2 class="h4 fw-bold mb-1">Welcome Back</h2>
+      <p class="small opacity-75 mb-0">Sign in to your account</p>
+    </div>
+
+    <!-- Card Body -->
+    <div class="px-4 py-4">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Email -->
+        <div class="mb-3">
+          <label
+            for="email"
+            class="form-label fw-semibold small text-secondary"
+          >
+            <i class="fas fa-envelope me-1"></i> Email Address
+          </label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control rounded-3"
+            placeholder="you@example.com"
+            [ngClass]="{
+              'is-valid':
+                !loginForm.get('email')?.errors &&
+                (loginForm.get('email')?.touched ||
+                  loginForm.get('email')?.dirty),
+              'is-invalid':
+                loginForm.get('email')?.errors &&
+                (loginForm.get('email')?.touched ||
+                  loginForm.get('email')?.dirty),
+            }"
+          />
+          @if (
+            loginForm.get("email")?.errors &&
+            (loginForm.get("email")?.touched || loginForm.get("email")?.dirty)
+          ) {
+            <div class="invalid-feedback">
+              @if (loginForm.get("email")?.getError("required")) {
+                Email is required
+              } @else if (loginForm.get("email")?.getError("email")) {
+                Enter a valid email
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Password -->
+        <div class="mb-2">
+          <label
+            for="password"
+            class="form-label fw-semibold small text-secondary"
+          >
+            <i class="fas fa-lock me-1"></i> Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            class="form-control rounded-3"
+            placeholder="Enter your password"
+            [ngClass]="{
+              'is-valid':
+                !loginForm.get('password')?.errors &&
+                (loginForm.get('password')?.touched ||
+                  loginForm.get('password')?.dirty),
+              'is-invalid':
+                loginForm.get('password')?.errors &&
+                (loginForm.get('password')?.touched ||
+                  loginForm.get('password')?.dirty),
+            }"
+          />
+          @if (
+            loginForm.get("password")?.errors &&
+            (loginForm.get("password")?.touched ||
+              loginForm.get("password")?.dirty)
+          ) {
+            <div class="invalid-feedback">
+              @if (loginForm.get("password")?.getError("required")) {
+                Password is required
+              } @else if (loginForm.get("password")?.getError("pattern")) {
+                At least 6 characters
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Forgot Password -->
+        <div class="text-end mb-4">
+          <a
+            routerLink="/forgotpass"
+            class="small fw-semibold"
+            style="color: var(--main-color)"
+          >
+            Forgot password?
+          </a>
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="btn w-100 rounded-3 py-2 fw-bold text-white border-0"
+          style="
+            background: linear-gradient(
+              135deg,
+              var(--main-color),
+              var(--main-dark)
+            );
+            letter-spacing: 0.3px;
+          "
+          [disabled]="isLoading"
+        >
+          @if (isLoading) {
+            <span
+              class="spinner-border spinner-border-sm me-2"
+              role="status"
+            ></span>
+            Signing in…
+          } @else {
+            <i class="fas fa-right-to-bracket me-2"></i> Sign In
+          }
+        </button>
+
+        <!-- Success -->
+        @if (isSuccess) {
+          <div
+            class="alert alert-success d-flex align-items-center gap-2 mt-3 rounded-3 py-2"
+            role="alert"
+          >
+            <i class="fas fa-circle-check"></i>
+            <span>Login successful! Redirecting…</span>
+          </div>
+        }
+      </form>
+    </div>
+
+    <!-- Card Footer -->
+    <div class="card-footer bg-transparent border-0 text-center pb-4">
+      <span class="small text-secondary">Don't have an account?</span>
+      <a
+        routerLink="/register"
+        class="small fw-bold ms-1 cr"
+        style="color: var(--main-color)"
+      >
+        Create one
+      </a>
+    </div>
+  </div>
+</div>

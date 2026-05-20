@@ -1,0 +1,186 @@
+@if (productDetails) {
+  <section class="pd-section">
+    <!-- ── Header ── -->
+    <div class="pd-header">
+      <h2 class="section-title mb-0">Product <span>Details</span></h2>
+      <button class="back-btn" onclick="history.back()">
+        <i class="fas fa-arrow-left me-1"></i> Back
+      </button>
+    </div>
+
+    <div class="pd-grid">
+      <!-- ══ LEFT: Carousel ══ -->
+      <div class="pd-images">
+        <div class="pd-img-overflow pb-2">
+          <owl-carousel-o [options]="customOptionsDetails">
+            @for (image of productDetails.images; track $index) {
+              <ng-template carouselSlide>
+                <div class="pd-slide">
+                  <img
+                    [src]="image"
+                    [alt]="productDetails.title"
+                    class="pd-main-img"
+                  />
+                </div>
+              </ng-template>
+            }
+          </owl-carousel-o>
+        </div>
+
+        <!-- Brand badge over carousel -->
+        <div class="pd-brand-bar">
+          <img
+            [src]="productDetails.brand.image"
+            [alt]="productDetails.brand.name"
+            class="pd-brand-logo"
+          />
+          <span class="pd-brand-name">{{ productDetails.brand.name }}</span>
+        </div>
+      </div>
+
+      <!-- ══ RIGHT: Info ══ -->
+      <div class="pd-info">
+        <!-- Category + subcategory -->
+        <div class="pd-badges">
+          <span class="pd-category-label">{{
+            productDetails.category.name
+          }}</span>
+          @if (productDetails.subcategory?.length) {
+            <span class="pd-sub-label">{{
+              productDetails.subcategory[0].name
+            }}</span>
+          }
+        </div>
+
+        <!-- Title -->
+        <h2 class="pd-title">{{ productDetails.title }}</h2>
+
+        <!-- Description -->
+        <p class="pd-description">{{ productDetails.description }}</p>
+
+        <div class="pd-divider"></div>
+
+        <!-- Price + Rating -->
+        <div class="pd-price-row">
+          <div>
+            <div class="pd-price">
+              {{ productDetails.price }} <span class="pd-currency">EGP</span>
+            </div>
+            <div class="pd-price-sub">Free delivery on this item</div>
+          </div>
+
+          <div class="pd-rating">
+            <div class="pd-stars">
+              @for (
+                num of getFullStars(productDetails.ratingsAverage);
+                track $index
+              ) {
+                <i class="fas fa-star rating-color"></i>
+              }
+              @if (productDetails.ratingsAverage % 1 !== 0) {
+                <i class="fa-solid fa-star-half-stroke rating-color"></i>
+              }
+            </div>
+            <span class="pd-rating-val">{{
+              productDetails.ratingsAverage
+            }}</span>
+            <span class="pd-rating-count"
+              >({{ productDetails.ratingsQuantity }})</span
+            >
+          </div>
+        </div>
+
+        <!-- Stock + Sold pills -->
+        <div class="pd-meta-pills">
+          <span class="pd-pill pd-pill--green">
+            <i class="fas fa-box-open"></i>
+            {{ productDetails.quantity }} in stock
+          </span>
+          <span class="pd-pill pd-pill--muted">
+            <i class="fas fa-fire"></i>
+            {{ productDetails.sold }} sold
+          </span>
+          <span class="pd-pill pd-pill--muted">
+            <i class="fas fa-shield-alt"></i>
+            1 Year Warranty
+          </span>
+        </div>
+
+        <div class="pd-divider"></div>
+
+        <!-- Add to Cart -->
+        <button
+          class="btn-main pd-cart-btn"
+          (click)="addCart(productDetails.id)"
+        >
+          <i class="fas fa-cart-plus me-2"></i>
+          Add to Cart
+        </button>
+
+        <!-- Trust strip -->
+        <div class="pd-trust">
+          <div class="trust-item">
+            <div class="trust-icon"><i class="fas fa-truck"></i></div>
+            <div class="trust-text">
+              <span class="trust-label">Free Shipping</span>
+              <span class="trust-sub">Orders over 500 EGP</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-icon"><i class="fas fa-lock"></i></div>
+            <div class="trust-text">
+              <span class="trust-label">Secure Payment</span>
+              <span class="trust-sub">100% protected</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-icon"><i class="fas fa-undo"></i></div>
+            <div class="trust-text">
+              <span class="trust-label">Easy Returns</span>
+              <span class="trust-sub">No questions asked</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ REVIEWS SECTION ══ -->
+    @if (productDetails.reviews?.length) {
+      <div class="pd-reviews-section">
+        <div class="pd-reviews-header">
+          <h3 class="section-title mb-0">Customer <span>Reviews</span></h3>
+          <span class="pd-reviews-count"
+            >{{ productDetails.reviews?.length }} reviews</span
+          >
+        </div>
+
+        <div class="pd-reviews-grid">
+          @for (review of productDetails.reviews; track review._id) {
+            <div class="pd-review-card">
+              <div class="review-top">
+                <div class="review-avatar">
+                  {{ review.user.name.charAt(0).toUpperCase() }}
+                </div>
+                <div class="review-meta">
+                  <span class="review-name">{{ review.user.name }}</span>
+                  <span class="review-date">{{
+                    review.createdAt | date: "mediumDate"
+                  }}</span>
+                </div>
+                <div class="review-stars">
+                  @for (s of getFullStars(review.rating); track $index) {
+                    <i class="fas fa-star rating-color"></i>
+                  }
+                  @for (s of getEmptyStars(review.rating); track $index) {
+                    <i class="far fa-star" style="color: var(--border)"></i>
+                  }
+                </div>
+              </div>
+              <p class="review-text">{{ review.review }}</p>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </section>
+}

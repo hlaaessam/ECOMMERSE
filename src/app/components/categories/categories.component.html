@@ -1,0 +1,81 @@
+<!-- ── All Categories View ─────────────────────────────────────────────── -->
+@if (!selectedCategory()) {
+  <section class="categories-page">
+    <!-- Header -->
+    <div class="page-header">
+      <h1 class="page-title">Shop by <span>Category</span></h1>
+      <p class="page-subtitle">Explore our wide range of product categories</p>
+    </div>
+
+    <!-- Search -->
+    <div class="search-wrapper">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search categories…"
+        [(ngModel)]="searchText"
+      />
+    </div>
+
+    <!-- Grid -->
+    @if (!isLoading()) {
+      <div class="categories-grid">
+        @for (
+          cat of categoriesList() | search: searchText() : "name";
+          track cat._id
+        ) {
+          <div class="category-card" (click)="openCategory(cat._id)">
+            <div class="category-img-wrap">
+              <img [src]="cat.image" [alt]="cat.name" loading="lazy" />
+              <div class="img-overlay"></div>
+            </div>
+            <div class="card-body">
+              <h3 class="mx-1">{{ cat.name }}</h3>
+              <span class="view-link">
+                View all <i class="fa-solid fa-arrow-right ms-1"></i>
+              </span>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <!-- Skeleton loader -->
+      <div class="categories-grid">
+        @for (s of skeletons; track $index) {
+          <div class="category-card skeleton-card">
+            <div class="skeleton-img"></div>
+            <div class="skeleton-body">
+              <div class="skeleton-line w60"></div>
+              <div class="skeleton-line w40"></div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Empty state -->
+    @if (
+      !isLoading() &&
+      (categoriesList() | search: searchText() : "name").length === 0
+    ) {
+      <div class="empty-state">
+        <i class="fa-solid fa-folder-open"></i>
+        <p>
+          No categories found for "<strong>{{ searchText }}</strong
+          >"
+        </p>
+      </div>
+    }
+  </section>
+}
+
+<!-- ── Single Category View ────────────────────────────────────────────── -->
+@if (selectedCategory()) {
+  <section class="category-detail">
+    <app-category
+      [categoryId]="selectedCategory()!._id"
+      (close)="closeCategory()"
+    />
+  </section>
+}

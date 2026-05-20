@@ -1,0 +1,135 @@
+<div class="orders-page">
+  <!-- Page Header -->
+  <div class="orders-header">
+    <div class="header-line"></div>
+    <div class="header-content">
+      <span class="header-eyebrow">Your Account</span>
+      <h1 class="header-title text-main">Order History</h1>
+      <p class="header-sub">A full record of your purchases</p>
+    </div>
+    <div class="header-line"></div>
+  </div>
+
+  <!-- Orders -->
+  <div>
+    @for (order of orders; track order.id) {
+      <article class="order-entry orders-list">
+        <!-- Order Meta Row -->
+        <div class="order-meta">
+          <div class="order-id">
+            <span class="meta-label">Order</span>
+            <span class="meta-value">#{{ order.id }}</span>
+          </div>
+          <div class="order-date">
+            <span class="meta-label">Placed on</span>
+            <span class="meta-value">{{ order.createdAt }}</span>
+          </div>
+          <div class="order-status">
+            <span
+              class="status-pill"
+              [class]="order.isPaid ? 'paid' : 'unpaid'"
+            >
+              {{ order.isPaid ? "Paid" : "Unpaid" }}
+            </span>
+            <span
+              class="status-pill ms-2"
+              [class]="order.isDelivered ? 'delivered' : 'processing'"
+            >
+              {{ order.isDelivered ? "Delivered" : "Processing" }}
+            </span>
+          </div>
+        </div>
+
+        <div class="order-divider"></div>
+
+        <!-- Two-column layout: Items + Summary -->
+        <div class="order-body">
+          <!-- Items -->
+          <div class="order-items">
+            @for (item of order.cartItems; track item._id) {
+              <div class="order-item">
+                <div class="item-img-wrap">
+                  <img
+                    [src]="item.product.imageCover"
+                    [alt]="item.product.title"
+                    class="item-img"
+                  />
+                </div>
+                <div class="item-info">
+                  <div class="item-top">
+                    <span class="item-title">{{ item.product.title }}</span>
+                    <span class="item-price">{{ item.price }} EGP</span>
+                  </div>
+                  <span class="item-meta">
+                    {{ item.product.brand.name }} &middot;
+                    {{ item.product.category.name }}
+                  </span>
+                  <div class="item-bottom">
+                    <span class="item-qty">Qty {{ item.count }}</span>
+                    <span class="item-rating"
+                      >{{ item.product.ratingsAverage }} ★</span
+                    >
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Sidebar Summary -->
+          <aside class="order-summary">
+            <div class="summary-section">
+              <span class="summary-heading">Shipping</span>
+              <div class="summary-row">
+                <span class="s-label">Customer</span>
+                <span class="s-value">{{ order.user.name }}</span>
+              </div>
+              <div class="summary-row">
+                <span class="s-label">Address</span>
+                <span class="s-value">{{ order.shippingAddress.details }}</span>
+              </div>
+              <div class="summary-row">
+                <span class="s-label">City</span>
+                <span class="s-value">{{ order.shippingAddress.city }}</span>
+              </div>
+              <div class="summary-row">
+                <span class="s-label">Phone</span>
+                <span class="s-value">{{ order.shippingAddress.phone }}</span>
+              </div>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-section">
+              <span class="summary-heading">Payment</span>
+              <div class="summary-row">
+                <span class="s-label">Method</span>
+                <span class="s-value text-uppercase">{{
+                  order.paymentMethodType
+                }}</span>
+              </div>
+              <div class="summary-row">
+                <span class="s-label">Shipping Cost</span>
+                <span class="s-value free">Free</span>
+              </div>
+            </div>
+
+            <div class="summary-total">
+              <span class="total-label">Total</span>
+              <span class="total-value text-main"
+                >{{ order.totalOrderPrice }} EGP</span
+              >
+            </div>
+          </aside>
+        </div>
+      </article>
+    } @empty {
+      <div class="empty-state">
+        <div class="empty-icon">∅</div>
+        <p class="empty-text">No orders found.</p>
+        <span class="empty-sub"
+          >Your purchases will appear here once you place an order.</span
+        >
+      </div>
+    }
+  </div>
+</div>

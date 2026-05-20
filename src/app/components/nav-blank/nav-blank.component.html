@@ -1,0 +1,158 @@
+<nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+  <div class="d-flex justify-content-between align-items-center w-100 mx-2">
+    <!-- Brand -->
+    <a class="navbar-brand" routerLink="home">
+      <img
+        src="../../../assets/images/freshcart-logo.svg"
+        alt="Logo"
+        height="36"
+      />
+    </a>
+
+    <!-- Toggler -->
+    <button
+      class="navbar-toggler border-0 px-3 py-2 rounded-pill btn-toggle"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto gap-1 mt-2 mt-lg-0">
+        <li class="nav-item">
+          <a
+            class="nav-link px-3 py-2 rounded-pill"
+            routerLink="home"
+            routerLinkActive="active-link"
+          >
+            {{ "nav.home" | translate }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link px-3 py-2 rounded-pill"
+            routerLink="products"
+            routerLinkActive="active-link"
+          >
+            {{ "nav.products" | translate }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link px-3 py-2 rounded-pill"
+            routerLink="categories"
+            routerLinkActive="active-link"
+          >
+            {{ "nav.categories" | translate }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link pl-3 py-2 rounded-pill"
+            routerLink="brands"
+            routerLinkActive="active-link"
+          >
+            {{ "nav.brands" | translate }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link py-2 px-1 rounded-pill position-relative"
+            routerLink="allorders"
+            routerLinkActive="active-Text"
+          >
+            <i class="fa-brands fa-first-order fa-lg text-success"></i>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav align-items-lg-center gap-1 mb-2 mb-lg-0">
+        <!-- Language dropdown -->
+        <!-- <li class="nav-item dropdown">
+          <a
+            class="nav-link px-3 py-2 rounded-pill dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ "nav.lang" | translate }}
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end border-0 shadow rounded-3 p-2"
+          >
+            <li
+              [class.active]="_TranslateService.currentLang == 'en'"
+              (click)="change('en')"
+            >
+              <a class="dropdown-item rounded-2 fw-semibold small cr"
+                >🇬🇧 English</a
+              >
+            </li>
+            <li
+              [class.active]="_TranslateService.currentLang == 'ar'"
+              (click)="change('ar')"
+            >
+              <a class="dropdown-item rounded-2 fw-semibold small cr"
+                >🇸🇦 العربية</a
+              >
+            </li>
+          </ul>
+        </li> -->
+
+        <!-- Cart -->
+        <li class="nav-item">
+          <a
+            class="nav-link px-3 py-2 rounded-pill position-relative"
+            routerLink="cart"
+            routerLinkActive="active-Text"
+          >
+            <i class="fa-solid fa-cart-arrow-down fa-lg text-success"></i>
+            <span
+              class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-success"
+              style="font-size: 0.6rem"
+            >
+              {{ countNumber() }}
+            </span>
+          </a>
+        </li>
+
+        <!-- Social icons -->
+        <li class="nav-item d-none d-lg-block">
+          <a class="nav-link px-2 social-icon rounded-pill"
+            ><i class="fa-brands fa-facebook"></i
+          ></a>
+        </li>
+        <li class="nav-item d-none d-lg-block">
+          <a class="nav-link px-2 social-icon rounded-pill"
+            ><i class="fa-brands fa-twitter"></i
+          ></a>
+        </li>
+        <li class="nav-item d-none d-lg-block">
+          <a class="nav-link px-2 social-icon rounded-pill"
+            ><i class="fa-brands fa-instagram"></i
+          ></a>
+        </li>
+        <li class="nav-item d-none d-lg-block">
+          <a class="nav-link px-2 social-icon rounded-pill"
+            ><i class="fa-brands fa-linkedin"></i
+          ></a>
+        </li>
+
+        <!-- Sign out -->
+        <li class="nav-item" (click)="this._AuthService.logout()">
+          <a
+            class="nav-link px-3 py-2 rounded-pill fw-semibold text-danger-hover cr"
+          >
+            {{ "nav.signout" | translate }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
